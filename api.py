@@ -234,4 +234,4 @@ async def get_embedding(request: Request):
 
 
 if __name__ == "__main__":
-    uvicorn.run("api:app", port=args.port, reload=True)
+    uvicorn.run("api:app", port=args.port, reload=False)

@@ -193,6 +193,7 @@ request_pool = RequestPool(args.init_quota, args.max_generated_tokens)
 # 4. Log in to Hugging Face Hub using the HF CLI (see https://huggingface.co/docs/huggingface_hub/en/quick-start#login-command).
 # Otherwise, you may use Qwen/Qwen2.5-1.5B-Instruct, which does not require access permission.
 model_name = "Qwen/Qwen2.5-1.5B-Instruct"
+
 if torch.cuda.is_available():
     model_device = "cuda"
     model_dtype = torch.bfloat16
@@ -205,8 +206,10 @@ else:
 
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
-    dtype=model_dtype,
-).to(model_device)  # type: ignore
+    torch_dtype=model_dtype,
+    device_map="auto",
+    low_cpu_mem_usage=True,
+)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 
 

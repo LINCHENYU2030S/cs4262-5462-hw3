@@ -211,6 +211,7 @@ model = AutoModelForCausalLM.from_pretrained(
     low_cpu_mem_usage=True,
 )
 tokenizer = AutoTokenizer.from_pretrained(model_name)
+print(next(model.parameters()).device)
 
 
 @asynccontextmanager
